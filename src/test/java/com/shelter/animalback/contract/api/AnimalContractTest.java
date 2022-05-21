@@ -2,6 +2,14 @@ package com.shelter.animalback.contract.api;
 
 
 
+import au.com.dius.pact.provider.PactVerifyProvider;
+import au.com.dius.pact.provider.junit5.PactVerificationContext;
+import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
+import au.com.dius.pact.provider.junitsupport.Provider;
+import au.com.dius.pact.provider.junitsupport.State;
+import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
+import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
+import au.com.dius.pact.provider.spring.junit5.MockMvcTestTarget;
 import com.shelter.animalback.controller.AnimalController;
 import com.shelter.animalback.domain.Animal;
 import com.shelter.animalback.service.interfaces.AnimalService;
@@ -17,7 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-@PactProvider(url = "${PACT_BROKER_BASE_URL}", authentication = @PactBrokerAuth(token = "PACT_BROKER_TOKEN"))
+@PactBroker(url = "${PACT_BROKER_BASE_URL}", authentication = @PactBrokerAuth(token = "PACT_BROKER_TOKEN"))
 @Provider("AnimalShelterBack")
 @ExtendWith(MockitoExtension.class)
 public class AnimalContractTest {
@@ -63,7 +71,7 @@ public void getAnimal() {
     animal.setBreed("Bengali");
     animal.setGender("Female");
     animal.setVaccinated(true);
-    animal.setVaccines(new String[] { "Leptospirosis", "Parvovirus" });
+    animal.setVaccines(new String[] { "moquillo", "parvovirosis" });
 
     Mockito.when(animalService.get("Manchas")).thenReturn(animal);
 }
@@ -76,7 +84,7 @@ public void saveAnimal() {
     animal.setBreed("Bengali");
     animal.setGender("Female");
     animal.setVaccinated(true);
-    animal.setVaccines(new String[] { "Leptospirosis", "Parvovirus" });
+    animal.setVaccines(new String[] { "moquillo", "parvovirosis" });
 
     Mockito.when(animalService.save(animal)).thenReturn(animal);
 }
